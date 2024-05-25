@@ -5,14 +5,14 @@
 replicaCount: 1
 
 image:
-  repository: simple_server
+  repository: node
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "lts-iron"
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "simple_server"
+fullnameOverride: "simple-server"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -79,17 +79,16 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- name: simple-server-configmap
+  configMap:
+    name: simple-server-configmap
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+- name: simple-server-configmap
+  mountPath: "/server"
+  readOnly: true
 
 nodeSelector: {}
 

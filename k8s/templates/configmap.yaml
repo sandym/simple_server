@@ -1,0 +1,13 @@
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: {{ include "simple_server.fullname" . }}-configmap
+data:
+  package.json: |-
+    {{- tpl ($.Files.Get "server/package.json") . | nindent 4 }}
+  index.js: |-
+    {{- tpl ($.Files.Get "server/index.js") . | nindent 4 }}
+  cert.pem: |-
+    {{- tpl ($.Files.Get "server/cert.pem") . | nindent 4 }}
+  key.pem: |-
+    {{- tpl ($.Files.Get "server/key.pem") . | nindent 4 }}
